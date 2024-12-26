@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) window.location.href = "https://support.dmeng.net/upgrade-your-browser.html?referrer=" + encodeURIComponent(window.location.href); </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4552486_xlrgi1s66t.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Cosine OS | 使用Scratch 3 开发的操作系统</title>
+    <style>
+        .start,
+        .app {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .start>h3,
+        .app>h3 {
+            margin-top: 1%;
+            margin-bottom: 2.5%;
+        }
+
+        .start>button {
+            float: left;
+            margin: 0 0.25em;
+            padding: 0.5em 0.8em;
+            border-radius: 0.6em;
+            color: #FFFFFF;
+            background-color: var(--default);
+            box-shadow: 0em 0em 0.1em #00000050;
+            cursor: pointer;
+            transition: background-color 0.25s;
+        }
+
+        .start>button:hover {
+            background-color: #1E5ED5;
+        }
+
+        .emojis {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: linear-gradient(to bottom right,
+                    #f9bccc,
+                    #efb3d5,
+                    #d7b3e3,
+                    #bdb6ec,
+                    #99c0f9,
+                    #91defe);
+        }
+
+        @media screen and (max-width: 1000px) {
+            .emojis {
+                font-size: 0.5rem;
+            }
+        }
+
+        .emoji {
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .page.show .app {
+            transform: translateY(1rem);
+            opacity: 0;
+            animation: dnldShow 1s 0.25s forwards;
+        }
+
+        @keyframes dnldShow {
+            from {
+                transform: translateY(1rem);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .system {
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .system>a {
+            padding: 0 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 10rem;
+            height: 4rem;
+            border-radius: 0.5em;
+            font-size: 1.5rem;
+            transition: all 0.25s;
+        }
+
+        @media screen and (min-width: 1000px) {
+            .system>a:hover {
+                transform: translateY(-0.5rem);
+            }
+        }
+
+        .system>a>i {
+            margin-right: 1rem;
+            width: 1em;
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .system>a {
+                margin: 0.7rem 1rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .start {
+                color: #303030;
+            }
+
+            .emojis {
+                -webkit-filter: brightness(0.7);
+                filter: brightness(0.7);
+            }
+
+            .app>h1 {
+                -webkit-filter: brightness(2);
+                filter: brightness(2);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="nav">
+            <input type="radio" name="nav-obj" id="home" checked>
+            <label for="home">
+                <div class="icon img-home"></div>
+            </label>
+            <input type="radio" name="nav-obj" id="app">
+            <label for="app">
+                <div class="icon img-app"></div>
+            </label>
+
+            <hr>
+
+            <input type="radio" name="nav-obj" id="v1">
+            <label for="v1">
+                <div class="icon img-v1"></div>
+            </label>
+            <input type="radio" name="nav-obj" id="v2">
+            <label for="v2">
+                <div class="icon img-v2"></div>
+            </label>
+
+            <div class="tracker"></div>
+        </div>
+        <div class="container">
+            <div class="pages">
+                <div class="page show">
+                    <div class="start">
+                        <h1>Cosine OS</h1>
+                        <h3>基于 Scratch 开发的操作系统</h3>
+                        <button onclick="jumpToPage(4)">开始使用</button>
+                        <div class="emojis">
+                            <div class="emoji rocket" style="
+                            top: 20%;
+                            left: 20%;
+                            width: 8em;
+                            height: 8em;
+                            background-image: url(./src/emoji-rocket.png);"></div>
+                            <div class="emoji partying-face" style="
+                            bottom: 10%;
+                            left: 10%;
+                            width: 10em;
+                            height: 10em;
+                            transform: rotate(-10deg);
+                            background-image: url(./src/emoji-partying-face.png);"></div>
+                            <div class="emoji smiling-face-with-hearts" style="
+                            top: 15%;
+                            right: 15%;
+                            width: 8.5em;
+                            height: 8.5em;
+                            transform: rotate(5deg);
+                            background-image: url(./src/emoji-smiling-face-with-hearts.png);"></div>
+                            <div class="emoji clapping-hand" style="
+                            bottom: 20%;
+                            right: 10%;
+                            width: 9em;
+                            height: 9em;
+                            transform: rotate(-5deg);
+                            background-image: url(./src/emoji-clapping-hand.png);"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="app">
+                        <h1 style="background: linear-gradient(to bottom right, rgb(225, 0, 255), rgb(0, 0, 255));
+                        -webkit-background-clip: text;
+                        -moz-background-clip: text;
+                        -o-background-clip: text;
+                        background-clip: text;
+                        color: transparent;">Cosine App</h1>
+                        <h3>现已开放下载</h3>
+                        <div class="system">
+                            <a href="javascript:void(0)"
+                                onclick="downloadFile('./files/Cosine App.apk','Cosine App.apk')"
+                                style="color:#000000; background-color: #87C527;">
+                                <i style="background-image: url(./src/system-android.png);"></i>
+                                Android
+                            </a>
+                            <a href="javascript:void(0)"
+                                onclick="downloadFile('./files/Cosine App Setup.exe','Cosine App Setup.exe')"
+                                style="color:#FFFFFF; background-color: #0076D0;">
+                                <i style="background-image: url(./src/system-windows.png)"></i>
+                                Windows
+                            </a>
+                            <a href="https://apps.apple.com/cn/app/%E5%8E%9F%E7%A5%9E/id1467190251" target="_blank"
+                                style="
+                            color:#FFFFFF;
+                            background-color: #000000;
+                            position: relative;">
+                                <i style="background-image: url(./src/system-ios.png)"></i>
+                                iOS
+                                <span style="position: absolute;
+                                top: -0.75em;
+                                right: -0.75em;
+                                padding: 0.5em;
+                                font-size: 1rem;
+                                border-radius: 0.75rem;
+                                background-color: #303030;">敬请期待</span>
+                            </a>
+                            <a href="javascript:void(0)" style="
+                            color:#FFFFFF;
+                            background-color: #000000;
+                            position: relative;">
+                                <i style="background-image: url(./src/system-mac.png)"></i>
+                                Mac
+                                <span style="position: absolute;
+                                top: -0.75em;
+                                right: -0.75em;
+                                padding: 0.5em;
+                                font-size: 1rem;
+                                border-radius: 0.75rem;
+                                background-color: #303030;">敬请期待</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class=" page">
+                    <div class="content">
+                        <div class="banner">
+                            <button class="prev-btn iconfont icon-left"></button>
+                            <div class="pics">
+                                <img src="./src/pic-v1-1.jpg" alt="桌面">
+                                <img src="./src/pic-v1-2.jpg" alt="个性化">
+                                <img src="./src/pic-v1-3.jpg" alt="音乐">
+                                <img src="./src/pic-v1-4.jpg" alt="商店">
+                                <img src="./src/pic-v1-5.jpg" alt="设置">
+                            </div>
+                            <button class="next-btn iconfont icon-right"></button>
+                        </div>
+                        <div class="benifits">
+                            <div>
+                                <h3>优化创新</h3>
+                                <hr>
+                                <span>
+                                    历时一年的打磨，经过了多轮调整优化<br>
+                                    里程碑式地增加了时间显示、小组件等功能
+                                </span>
+                            </div>
+                            <div>
+                                <h3>功能亮点</h3>
+                                <hr>
+                                <span>
+                                    全局深色模式适配<br>
+                                    创新的小组件功能<br>
+                                    改进的应用商店及全新的应用
+                                </span>
+                            </div>
+                            <div>
+                                <h3>底层优化</h3>
+                                <hr>
+                                <span>
+                                    更快的运行速度<br>
+                                    更流畅的动画<br>
+                                    更强的拓展性
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <img src="./src/cover-v1.jpg">
+                        <div class="name">
+                            <h1>Cosine OS</h1>
+                            <div class="tags">
+                                <span class="custom-tag editor-scratch"></span>
+                                <span class="custom-tag net-offline"></span>
+                                <span>稳定</span>
+                                <span style="background-color: #EC0A0A;">停止支持</span>
+                            </div>
+                        </div>
+                        <div class="launch">
+                            <select>
+                                <optgroup label="在线">
+                                    <option value="/Cosine-OS/1/">🌐 网页版</option>
+                                    <option value="https://www.scratch-cn.cn/project/h5?comid=631484f062fc54079cd2e81a">
+                                        🔗 Scratch中社</option>
+                                </optgroup>
+                                <optgroup label="离线">
+                                    <option value="#2">📱 下载应用程序</option>
+                                </optgroup>
+                            </select>
+                            <button>▶</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="content">
+                        <div class="banner">
+                            <button class="prev-btn iconfont icon-left"></button>
+                            <div class="pics">
+                                <img src="./src/pic-v2-1.jpg" alt="桌面">
+                                <img src="./src/pic-v2-2.jpg" alt="音乐">
+                                <img src="./src/pic-v2-3.jpg" alt="商店">
+                                <img src="./src/pic-v2-4.jpg" alt="Ava">
+                            </div>
+                            <button class="next-btn iconfont icon-right"></button>
+                        </div>
+                        <div class="benifits">
+                            <div>
+                                <h3>全新内核</h3>
+                                <hr>
+                                重塑系统内核，经过长期的技术沉淀，性能卓越<br>
+                                动画的全覆盖，细致入微，流畅丝滑<br>
+                                全屏化应用，专注高效<br>
+                                全新的应用体验，层次丰富
+                            </div>
+                            <div>
+                                <h3>设计理念</h3>
+                                <hr>
+                                我们秉持“将更好呈现给用户，将更少留给开发者”的理念<br>
+                                对新一代的Cosine OS进行反复的修改优化，操作不变，体验更好
+                            </div>
+                            <div>
+                                <h3>焕新体验</h3>
+                                <hr>
+                                更加集成化的内核结构，使开发易如反掌<br>
+                                超过五轮的图标重绘优化，观感舒适细腻
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <img src="./src/cover-v2.jpg">
+                        <div class="name">
+                            <h1>Cosine OS 2</h1>
+                            <div class="tags">
+                                <span class="custom-tag editor-turbowarp"></span>
+                                <span class="custom-tag net-online"></span>
+                                <span>最新</span>
+                                <span style="background-color: #87C527;">Beta</span>
+                            </div>
+                        </div>
+                        <div class="launch">
+                            <select>
+                                <optgroup label="在线">
+                                    <option value="/Cosine-OS/2/">🌐 网页版</option>
+                                </optgroup>
+                                <optgroup label="离线">
+                                    <option value="#2">📱 下载应用程序</option>
+                                </optgroup>
+                            </select>
+                            <button>▶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="previewer"></div>
+
+    <script>
+        //锚点跳转
+        var radios = document.querySelectorAll('input[type="radio"][name="nav-obj"]');
+        var pages = document.querySelectorAll('.pages .page');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updatePageDisplayByHash();
+
+            radios.forEach(function (radio, index) {
+                radio.addEventListener('change', function () {
+                    updatePageDisplayByIndex(index);
+                    updateHash(index + 1);
+                });
+            });
+
+            window.addEventListener('hashchange', function () {
+                updatePageDisplayByHash();
+            });
+
+            function updatePageDisplayByIndex(index) {
+                pages.forEach(function (page, pageIndex) {
+                    page.classList.remove('show');
+                    if (pageIndex === index) {
+                        page.classList.add('show');
+                    }
+                });
+            }
+
+            function updatePageDisplayByHash() {
+                var hash = window.location.hash.substring(1);
+                var pageIndex = parseInt(hash, 10) - 1;
+
+                if (!isNaN(pageIndex) && pageIndex >= 0 && pageIndex < radios.length) {
+                    updatePageDisplayByIndex(pageIndex);
+
+                    if (!radios[pageIndex].checked) {
+                        radios[pageIndex].checked = true;
+                    }
+                } else {
+                    updatePageDisplayByIndex(0);
+                    radios[0].checked = true;
+                }
+            }
+
+            function updateHash(index) {
+                window.location.hash = index.toString();
+            }
+        });
+
+        //跳转页面
+        function jumpToPage(page) {
+            window.location.hash = page;
+        }
+
+        //跳转链接
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.addEventListener('click', function (event) {
+                if (event.target.tagName.toLowerCase() === 'button') {
+                    var selectElement = event.target.previousElementSibling;
+
+                    if (selectElement && selectElement.tagName.toLowerCase() === 'select') {
+                        var selectedValue = selectElement.value;
+
+                        if (selectedValue) {
+                            window.location.href = selectedValue;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
