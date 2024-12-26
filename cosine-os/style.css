@@ -436,8 +436,10 @@ select {
     left: 0;
     display: flex;
     justify-content: space-between;
+    width: fit-content;
     height: 2.5rem;
     border-radius: 1.25rem;
+    color: inherit;
     background-color: #FFFFFF50;
     box-shadow: 0em 0em 0.5em #00000015;
 }
