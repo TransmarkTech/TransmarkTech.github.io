@@ -1,0 +1,51 @@
+{
+  "id": "4700620",
+  "name": "Cosine App",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "42891679",
+      "name": "stop",
+      "font_class": "stop",
+      "unicode": "eb18",
+      "unicode_decimal": 60184
+    },
+    {
+      "icon_id": "42467379",
+      "name": "launch",
+      "font_class": "launch",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "42491825",
+      "name": "minimize",
+      "font_class": "minimize",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "42491827",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "5387613",
+      "name": "向左",
+      "font_class": "left",
+      "unicode": "eb16",
+      "unicode_decimal": 60182
+    },
+    {
+      "icon_id": "5387614",
+      "name": "向右",
+      "font_class": "right",
+      "unicode": "eb17",
+      "unicode_decimal": 60183
+    }
+  ]
+}

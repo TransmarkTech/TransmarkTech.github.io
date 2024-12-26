@@ -1,7 +1,6 @@
 @font-face {
     font-family: 'Hazy Gothic';
-    src: url(../fonts/HazyGothicSC-Regular.woff2) format(woff2);
-    src: url(../fonts/HazyGothicSC-Regular.woff) format(woff);
+    src: url(../fonts/HazyGothicSC-Regular.woff2);
 }
 
 * {
