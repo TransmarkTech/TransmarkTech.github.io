@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4700621_cqkz28frp66.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Rhythm 音乐</title>
+    <style>
+        .mobile-notify {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            box-sizing: border-box;
+            text-align: center;
+            z-index: 15;
+            background-color: #00000090;
+            -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+            opacity: 0;
+            transition: opacity 0.25s, backdrop-filter 0.25s;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .mobile-notify {
+                display: flex;
+                -webkit-backdrop-filter: blur(50px);
+                backdrop-filter: blur(50px);
+                opacity: 1;
+            }
+        }
+
+        .appicon {
+            width: 6rem;
+            height: 8rem;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSJub25lIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIzNjAiIGhlaWdodD0iMzYwIiB2aWV3Qm94PSIwIDAgMzYwIDM2MCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwLjE0NjQ0NjYwMDU1NjM3MzYiIHkxPSIwLjE0NjQ0NjYzMDM1ODY5NTk4IiB4Mj0iMC44NTM1NTMzNTQ3NDAxNDI4IiB5Mj0iMC44NTM1NTM0MTQzNDQ3ODc2IiBpZD0ibWFzdGVyX3N2ZzBfMV85Ij48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjQTVDOEZGIiBzdG9wLW9wYWNpdHk9IjEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNCOUE1RkYiIHN0b3Atb3BhY2l0eT0iMSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnPjxwYXRoIGQ9Ik0wLDI2MEMwLDMxNS4yMjgsNDQuNzcxNSwzNjAsMTAwLDM2MEwyNjAsMzYwQzMxNS4yMjgsMzYwLDM2MCwzMTUuMjI4LDM2MCwyNjBMMzYwLDEwMEMzNjAsNDQuNzcxNSwzMTUuMjI4LDAsMjYwLDBMMTAwLDBDNDQuNzcxNSwwLDAsNDQuNzcxNSwwLDEwMEwwLDI2MFoiIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMSIvPjwvZz48Zz48Zz48cGF0aCBkPSJNMzIwLDE4MFEzMjAsMTgzLjQzNywzMTkuODMxLDE4Ni44NjlRMzE5LjY2MywxOTAuMzAyLDMxOS4zMjYsMTkzLjcyMlEzMTguOTg5LDE5Ny4xNDMsMzE4LjQ4NSwyMDAuNTQyUTMxNy45OCwyMDMuOTQyLDMxNy4zMSwyMDcuMzEzUTMxNi42MzksMjEwLjY4MywzMTUuODA0LDIxNC4wMTdRMzE0Ljk2OSwyMTcuMzUxLDMxMy45NzIsMjIwLjY0UTMxMi45NzQsMjIzLjkyOSwzMTEuODE2LDIyNy4xNjVRMzEwLjY1OCwyMzAuNCwzMDkuMzQzLDIzMy41NzZRMzA4LjAyOCwyMzYuNzUxLDMwNi41NTgsMjM5Ljg1OFEzMDUuMDg5LDI0Mi45NjUsMzAzLjQ2OSwyNDUuOTk2UTMwMS44NDksMjQ5LjAyNywzMDAuMDgyLDI1MS45NzRRMjk4LjMxNSwyNTQuOTIyLDI5Ni40MDYsMjU3Ljc4UTI5NC40OTYsMjYwLjYzNywyOTIuNDQ5LDI2My4zOThRMjkwLjQwMiwyNjYuMTU4LDI4OC4yMjEsMjY4LjgxNVEyODYuMDQxLDI3MS40NzIsMjgzLjczMywyNzQuMDE4MDAwMDAwMDAwMDNRMjgxLjQyNSwyNzYuNTY1LDI3OC45OTUsMjc4Ljk5NVEyNzYuNTY1LDI4MS40MjUsMjc0LjAxODAwMDAwMDAwMDAzLDI4My43MzNRMjcxLjQ3MiwyODYuMDQxLDI2OC44MTUsMjg4LjIyMVEyNjYuMTU4LDI5MC40MDIsMjYzLjM5OCwyOTIuNDQ5UTI2MC42MzcsMjk0LjQ5NiwyNTcuNzgsMjk2LjQwNlEyNTQuOTIyLDI5OC4zMTUsMjUxLjk3NCwzMDAuMDgyUTI0OS4wMjcsMzAxLjg0OSwyNDUuOTk2LDMwMy40NjlRMjQyLjk2NSwzMDUuMDg5LDIzOS44NTgsMzA2LjU1OFEyMzYuNzUxLDMwOC4wMjgsMjMzLjU3NiwzMDkuMzQzUTIzMC40LDMxMC42NTgsMjI3LjE2NSwzMTEuODE2UTIyMy45MjksMzEyLjk3NCwyMjAuNjQsMzEzLjk3MlEyMTcuMzUxLDMxNC45NjksMjE0LjAxNywzMTUuODA0UTIxMC42ODMsMzE2LjYzOSwyMDcuMzEzLDMxNy4zMVEyMDMuOTQyLDMxNy45OCwyMDAuNTQyLDMxOC40ODVRMTk3LjE0MywzMTguOTg5LDE5My43MjIsMzE5LjMyNlExOTAuMzAyLDMxOS42NjMsMTg2Ljg2OSwzMTkuODMxUTE4My40MzcsMzIwLDE4MCwzMjBRMTc2LjU2MywzMjAsMTczLjEzLDMxOS44MzFRMTY5LjY5OCwzMTkuNjYzLDE2Ni4yNzgwMDAwMDAwMDAwMiwzMTkuMzI2UTE2Mi44NTcsMzE4Ljk4OSwxNTkuNDU4LDMxOC40ODVRMTU2LjA1OCwzMTcuOTgsMTUyLjY4NywzMTcuMzFRMTQ5LjMxNywzMTYuNjM5LDE0NS45ODMsMzE1LjgwNFExNDIuNjQ5LDMxNC45NjksMTM5LjM2MDEsMzEzLjk3MlExMzYuMDcxMywzMTIuOTc0LDEzMi44MzU0LDMxMS44MTZRMTI5LjU5OTUsMzEwLjY1OCwxMjYuNDI0MywzMDkuMzQzUTEyMy4yNDkxLDMwOC4wMjgsMTIwLjE0MjMsMzA2LjU1OFExMTcuMDM1NCwzMDUuMDg5LDExNC4wMDQ0LDMwMy40NjlRMTEwLjk3MzQsMzAxLjg0OSwxMDguMDI1NiwzMDAuMDgyUTEwNS4wNzc4LDI5OC4zMTUsMTAyLjIyMDEsMjk2LjQwNlE5OS4zNjI1LDI5NC40OTYsOTYuNjAyMTAwMDAwMDAwMDEsMjkyLjQ0OVE5My44NDE2LDI5MC40MDIsOTEuMTg0OSwyODguMjIxUTg4LjUyODIsMjg2LjA0MSw4NS45ODE2OTk5OTk5OTk5OSwyODMuNzMzUTgzLjQzNTIwMDAwMDAwMDAxLDI4MS40MjUsODEuMDA1LDI3OC45OTVRNzguNTc0ODAwMDAwMDAwMDEsMjc2LjU2NSw3Ni4yNjY4LDI3NC4wMTgwMDAwMDAwMDAwM1E3My45NTg4LDI3MS40NzIsNzEuNzc4NTAwMDAwMDAwMDEsMjY4LjgxNVE2OS41OTgxOTk5OTk5OTk5OSwyNjYuMTU4LDY3LjU1MDksMjYzLjM5OFE2NS41MDM2LDI2MC42MzcsNjMuNTk0MiwyNTcuNzhRNjEuNjg0Nzk5OTk5OTk5OTk2LDI1NC45MjIsNTkuOTE4LDI1MS45NzRRNTguMTUxMSwyNDkuMDI3LDU2LjUzMSwyNDUuOTk2UTU0LjkxMDksMjQyLjk2NSw1My40NDE1LDIzOS44NThRNTEuOTcyMSwyMzYuNzUxLDUwLjY1NjgwMDAwMDAwMDAwNCwyMzMuNTc2UTQ5LjM0MTY0LDIzMC40LDQ4LjE4MzgyLDIyNy4xNjVRNDcuMDI1OTksMjIzLjkyOSw0Ni4wMjgzNCwyMjAuNjRRNDUuMDMwNjksMjE3LjM1MSw0NC4xOTU2MSwyMTQuMDE3UTQzLjM2MDUzLDIxMC42ODMsNDIuNjkwMDUsMjA3LjMxM1E0Mi4wMTk1NiwyMDMuOTQyLDQxLjUxNTI3LDIwMC41NDJRNDEuMDEwOTksMTk3LjE0Myw0MC42NzQxMjMsMTkzLjcyMlE0MC4zMzcyNTcsMTkwLjMwMiw0MC4xNjg2MjEsMTg2Ljg2OVEzOS45OTk5ODQ2ODY1LDE4My40MzcsMzkuOTk5OTg0Njg2NSwxODBRMzkuOTk5OTg0Njg2NSwxNzYuNTYzLDQwLjE2ODYyMSwxNzMuMTMxUTQwLjMzNzI1NywxNjkuNjk4LDQwLjY3NDEyMywxNjYuMjc4MDAwMDAwMDAwMDJRNDEuMDEwOTksMTYyLjg1Nyw0MS41MTUyNywxNTkuNDU4UTQyLjAxOTU2LDE1Ni4wNTgsNDIuNjkwMDUsMTUyLjY4N1E0My4zNjA1MywxNDkuMzE3LDQ0LjE5NTYxLDE0NS45ODNRNDUuMDMwNjksMTQyLjY0OSw0Ni4wMjgzNCwxMzkuMzYwMVE0Ny4wMjU5OSwxMzYuMDcxMyw0OC4xODM4MiwxMzIuODM1NFE0OS4zNDE2NCwxMjkuNTk5NSw1MC42NTY4MDAwMDAwMDAwMDQsMTI2LjQyNDNRNTEuOTcyMSwxMjMuMjQ5MSw1My40NDE1LDEyMC4xNDIzUTU0LjkxMDksMTE3LjAzNTQsNTYuNTMxLDExNC4wMDQ0UTU4LjE1MTEsMTEwLjk3MzQsNTkuOTE4LDEwOC4wMjU2UTYxLjY4NDc5OTk5OTk5OTk5NiwxMDUuMDc3OCw2My41OTQyLDEwMi4yMjAyUTY1LjUwMzYsOTkuMzYyNiw2Ny41NTA5LDk2LjYwMjEwMDAwMDAwMDAxUTY5LjU5ODE5OTk5OTk5OTk5LDkzLjg0MTYsNzEuNzc4NTAwMDAwMDAwMDEsOTEuMTg0OVE3My45NTg4LDg4LjUyODIsNzYuMjY2OCw4NS45ODE2OTk5OTk5OTk5OVE3OC41NzQ4MDAwMDAwMDAwMSw4My40MzUyMDAwMDAwMDAwMSw4MS4wMDUsODEuMDA1UTgzLjQzNTIwMDAwMDAwMDAxLDc4LjU3NDksODUuOTgxNjk5OTk5OTk5OTksNzYuMjY2OFE4OC41MjgyLDczLjk1ODgsOTEuMTg0OSw3MS43Nzg1MDAwMDAwMDAwMVE5My44NDE2LDY5LjU5ODE5OTk5OTk5OTk5LDk2LjYwMjEwMDAwMDAwMDAxLDY3LjU1MDlROTkuMzYyNSw2NS41MDM2LDEwMi4yMjAxLDYzLjU5NDMwMDAwMDAwMDAwNFExMDUuMDc3OCw2MS42ODQ5LDEwOC4wMjU2LDU5LjkxOFExMTAuOTczNCw1OC4xNTExLDExNC4wMDQ0LDU2LjUzMVExMTcuMDM1NCw1NC45MTA5LDEyMC4xNDIzLDUzLjQ0MTVRMTIzLjI0OTEsNTEuOTcyMSwxMjYuNDI0Myw1MC42NTY5UTEyOS41OTk1LDQ5LjM0MTY1LDEzMi44MzU0LDQ4LjE4MzgzUTEzNi4wNzEzLDQ3LjAyNTk5OTk5OTk5OTk5NiwxMzkuMzYwMSw0Ni4wMjgzNVExNDIuNjQ5LDQ1LjAzMDcsMTQ1Ljk4Myw0NC4xOTU2MlExNDkuMzE3LDQzLjM2MDU1LDE1Mi42ODcsNDIuNjkwMDZRMTU2LjA1OCw0Mi4wMTk1NywxNTkuNDU4LDQxLjUxNTI5UTE2Mi44NTcsNDEuMDExLDE2Ni4yNzgwMDAwMDAwMDAwMiw0MC42NzQxMzhRMTY5LjY5OCw0MC4zMzcyNzIsMTczLjEzLDQwLjE2ODYzNlExNzYuNTYzLDQwLDE4MCw0MFExODMuNDM3LDQwLDE4Ni44NjksNDAuMTY4NjM2UTE5MC4zMDIsNDAuMzM3MjcyLDE5My43MjIsNDAuNjc0MTM4UTE5Ny4xNDMsNDEuMDExLDIwMC41NDIsNDEuNTE1MjlRMjAzLjk0Miw0Mi4wMTk1NywyMDcuMzEzLDQyLjY5MDA2UTIxMC42ODMsNDMuMzYwNTUsMjE0LjAxNyw0NC4xOTU2MlEyMTcuMzUxLDQ1LjAzMDcsMjIwLjY0LDQ2LjAyODM1UTIyMy45MjksNDcuMDI1OTk5OTk5OTk5OTk2LDIyNy4xNjUsNDguMTgzODNRMjMwLjQsNDkuMzQxNjUsMjMzLjU3Niw1MC42NTY5UTIzNi43NTEsNTEuOTcyMSwyMzkuODU4LDUzLjQ0MTVRMjQyLjk2NSw1NC45MTA5LDI0NS45OTYsNTYuNTMxUTI0OS4wMjcsNTguMTUxMSwyNTEuOTc0LDU5LjkxOFEyNTQuOTIyLDYxLjY4NDksMjU3Ljc4LDYzLjU5NDMwMDAwMDAwMDAwNFEyNjAuNjM3LDY1LjUwMzYsMjYzLjM5OCw2Ny41NTA5UTI2Ni4xNTgsNjkuNTk4MTk5OTk5OTk5OTksMjY4LjgxNSw3MS43Nzg1MDAwMDAwMDAwMVEyNzEuNDcyLDczLjk1ODgsMjc0LjAxODAwMDAwMDAwMDAzLDc2LjI2NjhRMjc2LjU2NSw3OC41NzQ5LDI3OC45OTUsODEuMDA1UTI4MS40MjUsODMuNDM1MjAwMDAwMDAwMDEsMjgzLjczMyw4NS45ODE2OTk5OTk5OTk5OVEyODYuMDQxLDg4LjUyODIsMjg4LjIyMSw5MS4xODQ5UTI5MC40MDIsOTMuODQxNiwyOTIuNDQ5LDk2LjYwMjEwMDAwMDAwMDAxUTI5NC40OTYsOTkuMzYyNiwyOTYuNDA2LDEwMi4yMjAyUTI5OC4zMTUsMTA1LjA3NzgsMzAwLjA4MiwxMDguMDI1NlEzMDEuODQ5LDExMC45NzM0LDMwMy40NjksMTE0LjAwNDRRMzA1LjA4OSwxMTcuMDM1NCwzMDYuNTU4LDEyMC4xNDIzUTMwOC4wMjgsMTIzLjI0OTEsMzA5LjM0MywxMjYuNDI0M1EzMTAuNjU4LDEyOS41OTk1LDMxMS44MTYsMTMyLjgzNTRRMzEyLjk3NCwxMzYuMDcxMywzMTMuOTcyLDEzOS4zNjAxUTMxNC45NjksMTQyLjY0OSwzMTUuODA0LDE0NS45ODNRMzE2LjYzOSwxNDkuMzE3LDMxNy4zMSwxNTIuNjg3UTMxNy45OCwxNTYuMDU4LDMxOC40ODUsMTU5LjQ1OFEzMTguOTg5LDE2Mi44NTcsMzE5LjMyNiwxNjYuMjc4MDAwMDAwMDAwMDJRMzE5LjY2MywxNjkuNjk4LDMxOS44MzEsMTczLjEzMVEzMjAsMTc2LjU2MywzMjAsMTgwWiIgZmlsbD0idXJsKCNtYXN0ZXJfc3ZnMF8xXzkpIiBmaWxsLW9wYWNpdHk9IjEiLz48L2c+PGc+PHBhdGggZD0iTTE5NC43NTgxLDE2MS45MzU1TDE4NC4wMTYxLDE2MS45MzU1TDE4NC4wMTYxLDE4MS45MzU1TDE5NC43NTgxLDE4MS45MzU1UTIwMy4xNDI0OTk5OTk5OTk5OCwxODEuOTM1NSwyMDkuMDcxMywxODcuODY0MTk5OTk5OTk5OThRMjE1LDE5My43OTI5LDIxNSwyMDIuMTc3NFEyMTUsMjEwLjU2MTg5OTk5OTk5OTk4LDIwOS4wNzEzLDIxNi40OTA2UTIwMy4xNDI0OTk5OTk5OTk5OCwyMjIuNDE5MzAwMDAwMDAwMDIsMTk0Ljc1ODEsMjIyLjQxOTMwMDAwMDAwMDAyUTE4OS40NTYwMDAwMDAwMDAwMiwyMjIuNDE5MzAwMDAwMDAwMDIsMTg0Ljg3NDMsMjE5Ljg0ODVRMTc0LjUxNjEsMjE0LjAzNjI5OTk5OTk5OTk4LDE3NC41MTYxLDIwMi4xNzc0TDE3NC41MTYxLDEwOC45Mjc5TDExOC42NzYyNCwxNTQuNTExNUwxMzEuMzIzNzYsMTcwLjAwNDdMMTU0LjUxNjEsMTUxLjA3MjFMMTU0LjUxNjEsMjAyLjE3NzRRMTU0LjUxNjEsMjEzLjMwNTgsMTYwLjIwNjUsMjIyLjgxNjUwMDAwMDAwMDAyUTE2NS43MjIxLDIzMi4wMzUsMTc1LjA4NzQsMjM3LjI5MDAwMDAwMDAwMDAyUTE4NC4yMjgyMDAwMDAwMDAwMiwyNDIuNDE4OTk5OTk5OTk5OTgsMTk0Ljc1ODEsMjQyLjQxODk5OTk5OTk5OTk4UTIxMS40MjY4MDAwMDAwMDAwMSwyNDIuNDE4OTk5OTk5OTk5OTgsMjIzLjIxMzM5OTk5OTk5OTk4LDIzMC42MzI5OTk5OTk5OTk5OFEyMzUsMjE4Ljg0NjIsMjM1LDIwMi4xNzc0UTIzNSwxODUuNTA4NywyMjMuMjEzMzk5OTk5OTk5OTgsMTczLjcyMjFRMjExLjQyNjgwMDAwMDAwMDAxLDE2MS45MzU1LDE5NC43NTgxLDE2MS45MzU1WiIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9IjEiLz48L2c+PC9nPjwvZz48L3N2Zz4=);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .mobile-notify>a {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            color: #FFFFFF;
+            border: 1px solid;
+            border-radius: 2rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mobile-notify">
+        <div class="appicon"></div>
+        <h2>
+            该界面暂不支持小屏显示<br>
+            请切换至移动端页面
+        </h2>
+        <a href="">切换</a>
+    </div>
+
+    <div class="bg-overlay"></div>
+
+    <div class="home">
+        <div class="left">
+            <div class="banner"></div>
+            <div class="search">
+                <i class="iconfont icon-search"></i>
+                <input></input>
+            </div>
+            <ul>
+                <li><i class="iconfont icon-collect"></i>收藏</li>
+                <li><i class="iconfont icon-list"></i>歌单</li>
+                <li><i class="iconfont icon-history"></i>历史记录</li>
+                <li><i class="iconfont icon-setting"></i>设置</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div>
+                <img src="../res/image/cover/雨宮天-月灯り-《斩！赤红之瞳》TV动画第15-24集片尾曲.jpg" alt="">
+                <span>月灯り - 雨宮天</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="player">
+        <div class="player-overlay"></div>
+
+        <div class="content">
+            <div class="info">
+                <img src="../res/image/cover/雨宮天-月灯り-《斩！赤红之瞳》TV动画第15-24集片尾曲.jpg" alt="cover">
+                <h1>月灯り</h1>
+                <h3>雨宮天</h3>
+
+                <!-- 默认 -->
+                <!--
+                <h1>未播放音乐</h1>
+                <h3></h3>
+                -->
+            </div>
+            <div class="lyrics"></div>
+
+            <div class="playlist">
+                <h2>播放列表</h2>
+                <ol>
+                    <li>月灯り - 雨宮天</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-bar">
+        <progress id="progress-bar" value="0" max="0"></progress>
+        <div class="mini">
+            <img src="../res/image/cover/雨宮天-月灯り-《斩！赤红之瞳》TV动画第15-24集片尾曲.jpg" alt="">
+            <h4>月灯り</h4>
+            <span>雨宮天</span>
+
+
+            <!-- 默认 -->
+            <!--
+            <h4>未播放音乐</h4>
+            <span>test</span>
+        -->
+        </div>
+        <div class="controls">
+            <button class="iconfont icon-collect" id="collect"></button>
+            <button class="iconfont icon-last" id="last"></button>
+            <button class="iconfont icon-pause" id="play"></button>
+            <button class="iconfont icon-next" id="next"></button>
+            <button class="iconfont icon-lyric" id="lyric"></button>
+        </div>
+        <div class="list-btns">
+            <button class="iconfont icon-history" id="type"></button>
+            <button class="iconfont icon-list" id="list"></button>
+        </div>
+    </div>
+
+    <audio id="player" src="../res/music/雨宮天-月灯り-《斩！赤红之瞳》TV动画第15-24集片尾曲.mp3" title="月灯り"></audio>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
