@@ -442,30 +442,9 @@ select {
     box-shadow: 0em 0em 0.5em #00000015;
 }
 
-.launch>select {
-    padding: 0 0.25rem;
-    width: calc(100% - 2.5rem);
-    height: 100%;
-    box-sizing: border-box;
-    border-top-left-radius: 1.25rem;
-    border-bottom-left-radius: 1.25rem;
-    color: inherit;
-    font-weight: bold;
-    transition: all 0.25s;
-}
-
-.launch>button {
-    width: 2.5rem;
-    height: 100%;
-    border-top-right-radius: 1.25rem;
-    border-bottom-right-radius: 1.25rem;
+.launch:hover {
     color: #FFFFFF;
     background-color: var(--default);
-    transition: background-color 0.25s;
-}
-
-.launch>button:hover {
-    background-color: #1E5ED5;
 }
 
 .previewer {
@@ -680,9 +659,5 @@ select {
 
     .launch {
         background-color: #00000050;
-    }
-
-    .launch>select {
-        background-color: #303030;
     }
 }
