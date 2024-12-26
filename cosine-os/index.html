@@ -317,12 +317,7 @@
                                 <span style="background-color: #EC0A0A;">停止支持</span>
                             </div>
                         </div>
-                        <div class="launch">
-                            <select>
-                                <option value="#2">📱 下载应用程序</option>
-                            </select>
-                            <button><i class="iconfont icon-launch"></i></button>
-                        </div>
+                        <button class="launch" onclick="jumpToPage(2)">📱 下载应用程序</button>
                     </div>
                 </div>
                 <div class="page">
@@ -371,12 +366,7 @@
                                 <span style="background-color: #87C527;">Beta</span>
                             </div>
                         </div>
-                        <div class="launch">
-                            <select>
-                                <option value="#2">📱 下载应用程序</option>
-                            </select>
-                            <button><i class="iconfont icon-launch"></i></button>
-                        </div>
+                        <button class="launch" onclick="jumpToPage(2)">📱 下载应用程序</button>
                     </div>
                 </div>
             </div>
@@ -438,23 +428,6 @@
         function jumpToPage(page) {
             window.location.hash = page;
         }
-
-        //跳转链接
-        document.addEventListener('DOMContentLoaded', function () {
-            document.body.addEventListener('click', function (event) {
-                if (event.target.tagName.toLowerCase() === 'button') {
-                    var selectElement = event.target.previousElementSibling;
-
-                    if (selectElement && selectElement.tagName.toLowerCase() === 'select') {
-                        var selectedValue = selectElement.value;
-
-                        if (selectedValue) {
-                            window.location.href = selectedValue;
-                        }
-                    }
-                }
-            });
-        });
     </script>
 
     <script src="./script.js"></script>
